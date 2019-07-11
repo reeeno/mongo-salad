@@ -1,4 +1,4 @@
-package com.knowhere.mongosalad.controller;
+package com.knowhere.mongosalad.dao;
 
 import com.knowhere.mongosalad.model.Candidate;
 import org.springframework.data.mongodb.repository.MongoRepository;

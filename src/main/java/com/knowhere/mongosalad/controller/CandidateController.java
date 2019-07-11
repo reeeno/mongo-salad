@@ -1,5 +1,6 @@
 package com.knowhere.mongosalad.controller;
 
+import com.knowhere.mongosalad.dao.CandidateRepository;
 import com.knowhere.mongosalad.exceptions.ResourceNotFoundException;
 import com.knowhere.mongosalad.model.Candidate;
 import org.springframework.beans.factory.annotation.Autowired;
