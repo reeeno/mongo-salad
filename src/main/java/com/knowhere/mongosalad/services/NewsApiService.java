@@ -1,6 +1,6 @@
 package com.knowhere.mongosalad.services;
 
-import com.knowhere.mongosalad.model.Article;
+import com.knowhere.mongosalad.model.NewsApi;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,18 +38,22 @@ public class NewsApiService {
     private static final String NEWSAPI_PAGE_SIZE_PARAM = "pageSize";
     private static final String NEWSAPI_PAGE_PARAM = "page";
 
-    public Article readDataFromNewsApi(String from, String to) throws UnsupportedEncodingException {
+    public NewsApi readDataFromNewsApi(String from, String to, String... q) throws UnsupportedEncodingException {
+        String query = q.length > 0 ? q[0] : "";
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(newsApiUrl)
                 .queryParam(NEWSAPI_API_KEY_PARAM, newsApiKey)
                 .queryParam(NEWSAPI_FROM_PRARAM, from)
                 .queryParam(NEWSAPI_TO_PARAM, to)
-                .queryParam(NEWSAPI_SOURCES_PARAM, newsApiSources);
+                .queryParam(NEWSAPI_SOURCES_PARAM, newsApiSources)
+                .queryParam(NEWSAPI_PAGE_SIZE_PARAM, 100)
+                .queryParam(NEWSAPI_PAGE_PARAM, 1)
+                .queryParam(NEWSAPI_QUERY_PARAM, query);
         logger.info(builder.toUriString());
-        ResponseEntity<Article> newsApiResponse = restTemplate.exchange(
+        ResponseEntity<NewsApi> newsApiResponse = restTemplate.exchange(
                 builder.toUriString(),
                 HttpMethod.GET,
                 new HttpEntity<>(),
-                Article.class
+                NewsApi.class
         );
         return newsApiResponse.getBody();
 
